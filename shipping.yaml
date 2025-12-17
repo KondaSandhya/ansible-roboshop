@@ -26,6 +26,7 @@
         state: present
         shell: /sbin/nologin
         home: /app
+        system: yes
     - name: Download shipping code
       ansible.builtin.get_url:
         url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
