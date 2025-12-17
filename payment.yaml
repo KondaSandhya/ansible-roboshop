@@ -5,11 +5,14 @@
     - name: Install python
       ansible.builtin.dnf:
         name: '{{ item }}'
-        state: present
+        state: installed
       loop:
         - python3
         - gcc
         - python3-devel
+        - openssh-server
+        - openssh-clients
+        - openssl
 
     - name: Create application directory
       ansible.builtin.file:
@@ -31,6 +34,7 @@
         src: /tmp/payment.zip
         dest: /app
         remote_src: yes
+
     - name: Install python dependencies
       ansible.builtin.pip:
         requirements: /app/requirements.txt
