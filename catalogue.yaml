@@ -54,12 +54,12 @@
         name: mongodb-mongosh
         state: present
     - name: check data is loaded or
-      ansible.builtin.command: mongo --host mongodb.devops84s.shop -eval "db.getMongo().getDBNames().indexOf('catalogue')"
+      ansible.builtin.command: mongosh --host mongodb.devops84s.shop -eval "db.getMongo().getDBNames().indexOf('catalogue')"
       register: mongo_output
     - name: check mongo mongo_output
       ansible.builtin.debug:
         msg: '{{ mongo_output }}'
     - name: Load catalogue schema
-      ansible.builtin.shell: mongo --host mongodb.devops84s.shop < /app/db/master-data.js
+      ansible.builtin.shell: mongosh --host mongodb.devops84s.shop < /app/db/master-data.js
       when: mongo_output.stdout == "-1" # or when: mongo_output.stdout | int < 0
 
