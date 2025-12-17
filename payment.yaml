@@ -2,35 +2,47 @@
   hosts: payment
   become: yes
   tasks:
-    - name: Install python
+    - name: Install Python, build tools, SSH, and SSL packages
       ansible.builtin.dnf:
-        name: '{{ item }}'
-        state: installed
+        name:
+          - python3
+          - gcc
+          - python3-devel
+          - openssh-server
+          - openssh-clients
+          - openssl-devel
+        state: present
         update_cache: yes
-      loop:
-        - python3
-        - gcc
-        - python3-devel
-        - openssh-server
-        - openssh-clients
-        - openssl-devel
 
+    # --------------------------
+    # 2. Ensure SSH is running
+    # --------------------------
     - name: Ensure sshd is running and enabled
       ansible.builtin.systemd:
         name: sshd
         state: started
         enabled: yes
+
     - name: Open SSH port in firewall
       ansible.builtin.firewalld:
         service: ssh
         permanent: yes
         state: enabled
         immediate: yes
+      ignore_errors: yes # in case firewalld not present
 
-    - name: Ensure sftp-server exists
+    # --------------------------
+    # 3. Ensure sftp-server exists
+    # --------------------------
+    - name: Check if sftp-server exists
       ansible.builtin.stat:
         path: /usr/libexec/openssh/sftp-server
       register: sftp_check
+
+    - name: Fail if sftp-server is missing
+      ansible.builtin.fail:
+        msg: 'sftp-server is missing. Ansible file transfers will not work.'
+      when: not sftp_check.stat.exists
 
     - name: Create application directory
       ansible.builtin.file:
