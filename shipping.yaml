@@ -9,6 +9,9 @@
       loop:
         - maven
         - mysql
+    - name: Install PyMySQL
+      ansible.builtin.pip:
+        name: PyMySQL
     - name: Create application directory
       ansible.builtin.file:
         name: /app
