@@ -8,11 +8,11 @@
           - python3
           - gcc
           - python3-devel
-          - openssh-server
-          - openssh-clients
-          - openssl-devel
+          # - openssh-server
+          # - openssh-clients
+          # - openssl-devel
         state: present
-        update_cache: yes
+        #update_cache: yes
     - name: sshd running
       ansible.builtin.service:
         name: sshd
