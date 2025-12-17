@@ -13,6 +13,11 @@
         - openssh-server
         - openssh-clients
         - openssl
+    - name: Ensure sshd is running and enabled
+      ansible.builtin.systemd:
+        name: sshd
+        state: started
+        enabled: yes
 
     - name: Create application directory
       ansible.builtin.file:
