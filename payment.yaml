@@ -4,7 +4,7 @@
   tasks:
     - name: Install python
       ansible.builtin.dnf:
-        name: "{{ item }}"
+        name: '{{ item }}'
         state: present
       loop:
         - python3
@@ -19,7 +19,7 @@
     - name: Download payment service code
       ansible.builtin.get_url:
         url: https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip
-        dest: /tmp/payment.zip  
+        dest: /tmp/payment.zip
     - name: Unzip payment service code
       ansible.builtin.unarchive:
         src: /tmp/payment.zip
@@ -28,16 +28,17 @@
     - name: Install python dependencies
       ansible.builtin.pip:
         requirements: /app/requirements.txt
-        executable: pip3.9 
-    - name: Copy systemd service file 
+        executable: pip3.9
+    - name: Copy systemd service file
       ansible.builtin.copy:
         src: payment.service
         dest: /etc/systemd/system/payment.service
-    - name: System deamon reload  
+    - name: System deamon reload
       ansible.builtin.systemd.service:
+        name: payment
         daemon_reload: true
     - name: Start and Enable payment service
-      ansible.builtin.service:  
+      ansible.builtin.service:
         name: payment
         state: started
         enabled: yes
