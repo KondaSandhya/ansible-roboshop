@@ -35,12 +35,12 @@
       ansible.builtin.file:
         name: /app
         state: directory
-    - name: Create application user
-      ansible.builtin.user:
-        name: roboshop
-        system: true
-        shell: /sbin/nologin
-        home: /app
+    # - name: Create application user
+    #   ansible.builtin.user:
+    #     name: roboshop
+    #     system: true
+    #     shell: /sbin/nologin
+    #     home: /app
 
     - name: Download payment service code
       ansible.builtin.get_url:
