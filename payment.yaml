@@ -25,6 +25,11 @@
         state: enabled
         immediate: yes
 
+    - name: Ensure sftp-server exists
+      ansible.builtin.stat:
+        path: /usr/libexec/openssh/sftp-server
+      register: sftp_check
+
     - name: Create application directory
       ansible.builtin.file:
         name: /app
