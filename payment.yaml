@@ -1,5 +1,5 @@
 - name: Configure payment service
-  hosts: payment.devops84s.shop
+  hosts: payment
   become: yes
   tasks:
     - name: Install Python, build tools, SSH, and SSL packages
