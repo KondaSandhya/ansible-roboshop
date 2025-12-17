@@ -12,7 +12,8 @@
         - python3-devel
         - openssh-server
         - openssh-clients
-        - openssl
+        - openssl-devel
+
     - name: Ensure sshd is running and enabled
       ansible.builtin.systemd:
         name: sshd
